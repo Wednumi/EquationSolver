@@ -29,7 +29,7 @@
         {
             for (int a = 1; a <= _range; a++)
             {
-                for (int b = 1; b <= _range; b++)
+                for (int b = 1; b < a; b++)
                 {
                     var left = new EquastionSide(a, b);
                     AddAnswers(left);
@@ -41,7 +41,7 @@
 
         private void AddAnswers(EquastionSide left)
         {
-            for (int c = 1; c <= _range; c++)
+            for (int c = 1; c <= _range && _cubeTable[c] < SideCubeSum(left); c++)
             {
                 var request = new Request(left, c);
                 if (TryFindD(request, out var d) is false)
@@ -58,16 +58,15 @@
             }
         }
 
+        private int SideCubeSum(EquastionSide side)
+        {
+            return _cubeTable[side.A] + _cubeTable[side.B];
+        }
+
         private bool TryFindD(Request request, out int d)
         {
             var dCube = _cubeTable[request.Left.A] 
                 + _cubeTable[request.Left.B] - _cubeTable[request.C];
-
-            if(dCube < 0)
-            {
-                d = -1;
-                return false;
-            }
 
             d = Array.IndexOf(_cubeTable, dCube);
             return d != -1;
