@@ -35,32 +35,21 @@
                     AddAnswers(left);
                 }
             }
-
             return _answers;
         }
 
         private void AddAnswers(EquastionSide left)
         {
-            for (int c = 1; c <= _range && _cubeTable[c] < SideCubeSum(left); c++)
+            for (int c = 1; c < left.B; c++)
             {
                 var request = new Request(left, c);
                 if (TryFindD(request, out var d) is false)
                 {
                     continue;
                 }
-
                 var set = new AnswerSet(left, new EquastionSide(c, d));
-
-                if (SetCorrect(set))
-                {
-                    _answers.Add(set);
-                }
+                _answers.Add(set);
             }
-        }
-
-        private int SideCubeSum(EquastionSide side)
-        {
-            return _cubeTable[side.A] + _cubeTable[side.B];
         }
 
         private bool TryFindD(Request request, out int d)
@@ -70,9 +59,9 @@
             return d >= 0;
         }
 
-        private bool SetCorrect(AnswerSet set)
+        private int SideCubeSum(EquastionSide side)
         {
-            return !(set.Left.Equals(set.Right) || _answers.Contains(set));
-        }        
+            return _cubeTable[side.A] + _cubeTable[side.B];
+        }
     }
 }
