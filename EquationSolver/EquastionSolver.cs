@@ -66,8 +66,8 @@
         private bool TryFindD(Request request, out int d)
         {
             var dCube = SideCubeSum(request.Left) - _cubeTable[request.C];
-            d = Array.IndexOf(_cubeTable, dCube);
-            return d != -1;
+            d = Array.BinarySearch(_cubeTable, dCube);
+            return d >= 0;
         }
 
         private bool SetCorrect(AnswerSet set)
