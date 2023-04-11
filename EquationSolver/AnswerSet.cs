@@ -2,30 +2,40 @@
 {
     public class AnswerSet
     {
-        public EquastionSide Left { get; set; }
+        public int A { get; set; }
 
-        public EquastionSide Right { get; set; }
+        public int B { get; set; }
 
-        public AnswerSet(EquastionSide left, EquastionSide right)
+        public int C { get; set; }
+
+        public int D { get; set; }
+
+        public AnswerSet(int a, int b, int c, int d)
         {
-            Left = left;
-            Right = right;
-        }
-
-        public override bool Equals(object? obj)
-        {
-            if (obj is not AnswerSet set)
-            {
-                return false;
-            }
-
-            return (Left.Equals(set.Left) && Right.Equals(set.Right))
-                || (Left.Equals(set.Right) && Right.Equals(set.Left));
+            A = a;
+            B = b;
+            C = c;
+            D = d;
         }
 
         public override string ToString()
         {
-            return $"{Left.A}, {Left.B}, {Right.A}, {Right.B}";
+            return $"{A}, {B}, {C}, {D}";
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is not AnswerSet compared)
+            {
+                return false;
+            }
+
+            return Enumerable.SequenceEqual(ToList().Order(), compared.ToList().Order());
+        }
+
+        private List<int> ToList()
+        {
+            return new List<int> { A, B, C, D };
         }
     }
 }
