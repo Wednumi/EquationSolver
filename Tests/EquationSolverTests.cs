@@ -5,7 +5,7 @@ namespace Tests
     public class EquationSolverTests
     {
         [Fact]
-        public void FindSets_SetsHasEqualSumOfCubes()
+        public void FindSets_SetHasEqualSumOfCubes()
         {
             var result = EquationSolver.FindSets(1).First();
 
