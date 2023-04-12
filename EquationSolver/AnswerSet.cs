@@ -2,13 +2,15 @@
 {
     public class AnswerSet
     {
-        public int A { get; set; }
+        private int? _hashCode;
 
-        public int B { get; set; }
+        public int A { get; init; }
 
-        public int C { get; set; }
+        public int B { get; init; }
 
-        public int D { get; set; }
+        public int C { get; init; }
+
+        public int D { get; init; }
 
         public AnswerSet(int a, int b, int c, int d)
         {
@@ -25,17 +27,34 @@
 
         public override bool Equals(object? obj)
         {
-            if (obj is not AnswerSet compared)
+            if (obj is not AnswerSet comparing)
             {
                 return false;
             }
 
-            return Enumerable.SequenceEqual(ToList().Order(), compared.ToList().Order());
+            return GetHashCode() == comparing.GetHashCode();
         }
 
-        private List<int> ToList()
+        public override int GetHashCode()
         {
-            return new List<int> { A, B, C, D };
+            if(_hashCode == null)
+            {
+                var sumOfCubes = Math.Pow(A, 3) + Math.Pow(B, 3);
+
+                var leftRatio = GetRatio(A, B);
+                var rightRatio = GetRatio(C, D);
+
+                var minRatio = Math.Min(leftRatio, rightRatio);
+                var maxRatio = Math.Max(leftRatio, rightRatio);
+
+                _hashCode = HashCode.Combine(sumOfCubes, minRatio, maxRatio);
+            }
+            return (int)_hashCode;
+
+            double GetRatio(int i, int j)
+            {
+                return (double)Math.Max(i, j) / Math.Min(i, j);
+            }
         }
     }
 }

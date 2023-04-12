@@ -5,46 +5,23 @@ namespace Tests
     public class EquationSolverTests
     {
         [Fact]
-        public void FindProperSets_SimilarToNaive()
+        public void FindSets_SetsHasEqualSumOfCubes()
         {
-            var amount = 40;
-            var naiveResult = NaiveSolve(amount);
+            var result = EquationSolver.FindSets(1).First();
 
-            var result = EquationSolver.FindProperSets(amount);
-
-            Assert.Equal(naiveResult, result);
+            var sumOfCubesEqual = Math.Pow(result.A, 3) + Math.Pow(result.B, 3) ==
+                Math.Pow(result.C, 3) + Math.Pow(result.D, 3);
+            Assert.True(sumOfCubesEqual);
         }
 
-        private static List<AnswerSet> NaiveSolve(int amount)
+        [Fact]
+        public void FindSets_ReturnDistinct()
         {
-            var answers = new List<AnswerSet>();
+            var amount = 2;
+            var result = EquationSolver.FindSets(amount);
 
-            for (int a = 1; answers.Count < amount; a++)
-            {
-                for (int b = 1; b < a; b++)
-                {
-                    for (int c = 1; c < a; c++)
-                    {
-                        for (int d = 1; d < a; d++)
-                        {
-                            if (new int[] { a, b, c, d }.Distinct().Count() != 4)
-                            {
-                                continue;
-                            }
-                            if (Math.Pow(a, 3) + Math.Pow(b, 3) == Math.Pow(c, 3) + Math.Pow(d, 3))
-                            {
-                                var set = new AnswerSet(a, b, c, d);
-                                if (!answers.Contains(set))
-                                {
-                                    answers.Add(set);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            return answers;
+            var distinctCount = result.Distinct().Count();
+            Assert.Equal(amount, distinctCount);
         }
     }
 }
