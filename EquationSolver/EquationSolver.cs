@@ -28,7 +28,7 @@
 
                         cCube = Cube(c);
                         dCube = leftSum - cCube;
-                        if(dCube > cCube)
+                        if(cCube <= dCube)
                         {
                             break;
                         }
