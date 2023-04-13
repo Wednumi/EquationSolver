@@ -14,20 +14,15 @@
                     var bCube = Cube(b);
                     var leftSum = aCube + bCube;
 
-                    var c = a - 1;
-
-                    int cCube;
-                    int dCube;
-
-                    while (c > b)
+                    for(int c = a - 1; c > b; c--)
                     {
                         if (answers.Count == amount)
                         {
                             return answers;
                         }
 
-                        cCube = Cube(c);
-                        dCube = leftSum - cCube;
+                        var cCube = Cube(c);
+                        var dCube = leftSum - cCube;
                         if(cCube <= dCube)
                         {
                             break;
@@ -39,8 +34,6 @@
                             var set = new AnswerSet(a, b, c, (int)d);
                             answers.Add(set);
                         }
-
-                        c--;
                     }
                 }
             }
