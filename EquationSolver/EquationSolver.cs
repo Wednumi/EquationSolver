@@ -39,6 +39,6 @@
             }
         }
 
-        private static int Cube(int i) => (int)Math.Pow(i, 3);
+        private static int Cube(int i) => i * i * i;
     }
 }
